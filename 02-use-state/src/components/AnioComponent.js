@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 export const AnioComponent = ({ anioActual }) => {
 
     const [anio, setAnio] = useState(anioActual);
+    
     const anterior = e => setAnio(anio - 1);
+
     const proximo = e => setAnio(anio + 1);
+
     const ingresarAnio = (e, value) => {
         let nAnio = parseInt(value);
         if(Number.isInteger(nAnio)){
