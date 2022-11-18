@@ -54,7 +54,11 @@ export const FormularioComponent = () => {
                     <br />
                     Mi historia es:
                     <div>
-                        {usuario.biografia.split('\n')}
+                        {
+                            usuario.biografia.split('\n').map(
+                                (bio) =>  <div>{bio}</div> 
+                            )
+                        }
                     </div>
                 </div>
             }
