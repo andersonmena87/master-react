@@ -35,7 +35,7 @@ function App() {
 
             {/* Barra lateral */}
             <aside className="lateral">
-                <BuscadorComponent />
+                <BuscadorComponent pelisState={pelisState} setPelisState={setPelisState}/>
 
                 <CrearComponent setPelisState = { setPelisState } />
             </aside>
