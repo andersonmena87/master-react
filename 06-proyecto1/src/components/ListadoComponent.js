@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ObtenerDatosStorage } from '../helpers/LocalStorage';
+import { BorrarElementoStorage, ObtenerDatosStorage } from '../helpers/LocalStorage';
 
 export const ListadoComponent = ({pelisState, setPelisState}) => {
 
@@ -10,9 +10,18 @@ export const ListadoComponent = ({pelisState, setPelisState}) => {
         conseguirPeliculas();
     }, []);
 
+    const clavePeliculas = 'pelis';
+
+    const [editar , setEditar ] = useState(0);
+
     const conseguirPeliculas = () => {
-        let pelis = ObtenerDatosStorage('pelis');
+        let pelis = ObtenerDatosStorage(clavePeliculas);
         setPelisState(pelis);
+    }
+
+    const borrarPeli = (id) => {
+        let nuevas_pelis = BorrarElementoStorage(clavePeliculas, id);
+        setPelisState(nuevas_pelis);
     }
 
     return (
@@ -26,8 +35,10 @@ export const ListadoComponent = ({pelisState, setPelisState}) => {
                         <p className="description">
                             {peli.descripcion}
                         </p>
-                        <button className="edit">Editar</button>
-                        <button className="delete">Borrar</button>
+                        <button className="edit" onClick={ () => setEditar(peli.id) }>Editar</button>
+                        <button className="delete" onClick={ () => borrarPeli(peli.id) }>Borrar</button>
+
+                        {/* Aparece formulario para editar */}
                     </article>)
                 })
                 : <h2>No hay peliculas para mostrar</h2>
