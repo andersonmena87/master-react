@@ -11,7 +11,17 @@ export const PruebasComponent = () => {
 
     const modificarUsaurio = e => setUsuario(e.target.value);
 
-    const cambiarFecha = e => setFecha(Date.now().toLocaleString());
+    const formatoFecha = () => {
+        let fecha = new Date();
+        console.log('fecha', fecha);
+        let day = fecha.getUTCDate();
+        let month = fecha.getMonth() + 1;
+        let year = fecha.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    }
+
+    const cambiarFecha = e => setFecha(formatoFecha());
 
     //Se ejecuta al cargar o modificar un estado
     useEffect(() => {
@@ -32,7 +42,13 @@ export const PruebasComponent = () => {
   return (
     <div>
         <h1>El efecto - Hook useEffect</h1>
-        <strong className={contador >= 10 ? 'label-green label' : 'label'}>{usuario}</strong>
+        {usuario.length > 0 && 
+            <strong className={contador >= 10 ? 'label-green label' : 'label'}>
+                {usuario}
+            </strong>
+        }
+        <strong>Cambios: {contador}</strong>
+        <br />
         <strong>{fecha}</strong>
         <p>
             <input 
@@ -41,9 +57,11 @@ export const PruebasComponent = () => {
                 onChange={ modificarUsaurio }
             />
             <button onClick={ cambiarFecha }>Cambiar fecha</button>
+            &nbsp;
+            <button onClick={ () => setContador(0) }>Resetear cambios</button>
         </p>
         { contador >= 10 && 'Hemos superado los 10 cambios!!'}
-        { usuario === 'Batman' && <AvisoComponent />}
+        { usuario === 'Batman' && <AvisoComponent heroe={usuario} />}
     </div>
   )
 }

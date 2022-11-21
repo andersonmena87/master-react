@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-export const AvisoComponent = () => {
+export const AvisoComponent = ({ heroe }) => {
     useEffect(() => {
         // Se ejecuta cuando se monta el componente, se agrega [] como segundo parametor
         alert('Componnente AvisoComponent está montado!!');
@@ -13,7 +13,7 @@ export const AvisoComponent = () => {
 
     return (
         <div>
-            <h3>Saludos Batman!</h3>
+            <h3>Saludos {heroe}!</h3>
             <button onClick={e => alert('Bienvenido!')}>Mostrar alerta</button>
         </div>
     )
