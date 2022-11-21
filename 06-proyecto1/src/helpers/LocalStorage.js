@@ -1,4 +1,4 @@
-export const GuardarEnStorage = (clave, elemento) => {
+export const GuardarElementoEnStorage = (clave, elemento) => {
 
     // Conseguir los elementos que ya tenemos en el localStorage
     let elementos = JSON.parse(localStorage.getItem(clave));
@@ -19,6 +19,14 @@ export const GuardarEnStorage = (clave, elemento) => {
 
 };
 
+export const GuardarArrayEnStorage = (clave, elementos) => {
+    LimpiarDatosStorage(clave);
+
+    // Guardar en el localStorage
+    localStorage.setItem(clave, JSON.stringify(elementos));
+
+};
+
 export const ObtenerDatosStorage = (clave) => {
     let elementos = JSON.parse(localStorage.getItem(clave));
 
@@ -33,9 +41,13 @@ export const BorrarElementoStorage = (clave, id) => {
     let nuevosElementos = elementos.filter(item => item.id !== parseInt(id));
 
     //Actualizar los datos 
-    localStorage.removeItem(clave);
+    LimpiarDatosStorage(clave);
 
-    nuevosElementos.length > 0 && GuardarEnStorage(clave, nuevosElementos);
+    nuevosElementos.length > 0 && GuardarElementoEnStorage(clave, nuevosElementos);
 
     return nuevosElementos;
+}
+
+export const LimpiarDatosStorage = (clave) => {
+    localStorage.removeItem(clave);
 }

@@ -178,7 +178,10 @@ input[type="button"] {
 }
 
 .lateral input[type="text"],
-.lateral textarea {
+.lateral textarea,
+.edit_form input[type="text"],
+.edit_form textarea
+ {
   display: block;
   margin: 0 auto;
   margin-top: 15px;

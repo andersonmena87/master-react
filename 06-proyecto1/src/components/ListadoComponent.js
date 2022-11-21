@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { BorrarElementoStorage, ObtenerDatosStorage } from '../helpers/LocalStorage';
+import { EditarComponent } from './EditarComponent';
 
-export const ListadoComponent = ({pelisState, setPelisState}) => {
+export const ListadoComponent = ({ pelisState, setPelisState }) => {
 
     //Poner useState y useEffect siempre al principio por buenas practicas
     //const [pelisState, setPelisState] = useState([]);
@@ -12,11 +13,12 @@ export const ListadoComponent = ({pelisState, setPelisState}) => {
 
     const clavePeliculas = 'pelis';
 
-    const [editar , setEditar ] = useState(0);
+    const [editar, setEditar] = useState(0);
 
     const conseguirPeliculas = () => {
-        let pelis = ObtenerDatosStorage(clavePeliculas);
+        let pelis = ObtenerDatosStorage('pelis');
         setPelisState(pelis);
+        return pelis;
     }
 
     const borrarPeli = (id) => {
@@ -35,10 +37,21 @@ export const ListadoComponent = ({pelisState, setPelisState}) => {
                         <p className="description">
                             {peli.descripcion}
                         </p>
-                        <button className="edit" onClick={ () => setEditar(peli.id) }>Editar</button>
-                        <button className="delete" onClick={ () => borrarPeli(peli.id) }>Borrar</button>
+                        <button className="edit" onClick={() => setEditar(peli.id)}>Editar</button>
+                        <button className="delete" onClick={() => borrarPeli(peli.id)}>Borrar</button>
 
                         {/* Aparece formulario para editar */}
+                        {editar === peli.id &&
+                            <>
+                                <hr />
+                                <EditarComponent
+                                    peli={peli}
+                                    conseguirPeliculas={conseguirPeliculas}
+                                    setEditar={setEditar}
+                                    setPelisState={setPelisState}
+                                />
+                            </>
+                        }
                     </article>)
                 })
                 : <h2>No hay peliculas para mostrar</h2>
