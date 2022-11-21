@@ -1,95 +1,51 @@
+import { useState } from "react";
+import { BuscadorComponent } from "./components/BuscadorComponent";
+import { CrearComponent } from "./components/CrearComponent";
+import { ListadoComponent } from "./components/ListadoComponent";
 
 function App() {
-  return (
-    <div className="layout">
-        {/* Cabecera */}
-        <header className="header">
-            <div className="logo">
-                <div className="play"></div>
-            </div>
-            <h1>Mis pelis</h1>
-        </header>
 
-        {/* Barra de navagacion */}
-        <nav className="nav">
-            <ul>
-                <li><a href="/#">Inicio</a></li>
-                <li><a href="/#">Peliculas</a></li>
-                <li><a href="/#">Blog</a></li>
-                <li><a href="/#">Contacto</a></li>
-            </ul>
-        </nav>
+    const [pelisState, setPelisState] = useState();
 
-        {/* Contenido principal */}
-        <section className="content">
-            {/* Aqui van las peliculas */}
-            <article className="peli-item">
-                <h3 className="title">
-                    Desarrollo web
-                </h3>
-                <p className="description">andersonWeb</p>
+    return (
+        <div className="layout">
+            {/* Cabecera */}
+            <header className="header">
+                <div className="logo">
+                    <div className="play"></div>
+                </div>
+                <h1>Mis pelis</h1>
+            </header>
 
-                <button className="edit">Editar</button>
-                <button className="delete">Borrar</button>
-            </article>
+            {/* Barra de navagacion */}
+            <nav className="nav">
+                <ul>
+                    <li><a href="/#">Inicio</a></li>
+                    <li><a href="/#">Peliculas</a></li>
+                    <li><a href="/#">Blog</a></li>
+                    <li><a href="/#">Contacto</a></li>
+                </ul>
+            </nav>
 
-            <article className="peli-item">
-                <h3 className="title">
-                    Desarrollo web
-                </h3>
-                <p className="description">andersonWeb</p>
+            {/* Contenido principal */}
+            <section className="content">
+                {/* Aqui van las peliculas */}
+                <ListadoComponent pelisState={ pelisState } setPelisState = { setPelisState } />
+            </section>
 
-                <button className="edit">Editar</button>
-                <button className="delete">Borrar</button>
-            </article>
-            
-            <article className="peli-item">
-                <h3 className="title">
-                    Desarrollo web
-                </h3>
-                <p className="description">andersonWeb</p>
+            {/* Barra lateral */}
+            <aside className="lateral">
+                <BuscadorComponent />
 
-                <button className="edit">Editar</button>
-                <button className="delete">Borrar</button>
-            </article>
+                <CrearComponent setPelisState = { setPelisState } />
+            </aside>
 
-            <article className="peli-item">
-                <h3 className="title">
-                    Desarrollo web
-                </h3>
-                <p className="description">andersonWeb</p>
-
-                <button className="edit">Editar</button>
-                <button className="delete">Borrar</button>
-            </article>
-        </section>
-
-        {/* Barra lateral */}
-        <aside className="lateral">
-            <div className="search">
-                <h3 className="title">Buscador</h3>
-                <form>
-                    <input type="text" />
-                    <button>Buscar</button>
-                </form>
-            </div>
-
-            <div className="add">
-                <h3 className="title">Añadir pelicula</h3>
-                <form>
-                    <input type="text" placeholder="Título"/>
-                    <textarea placeholder="Descripción"></textarea>
-                    <button type="submit">Guardar</button>
-                </form>
-            </div>
-        </aside>
-
-        {/* Pie de pagina */}
-        <footer className="footer">
-            &copy; Master en Javascript ES12 y TypeScript - <a href="/#">andersonpelisweb.com</a>
-        </footer>
-    </div>
-  );
+            {/* Pie de pagina */}
+            <footer className="footer">
+                &copy; Master en Javascript ES12 y TypeScript - <a href="/#">andersonpelisweb.com</a>
+            </footer>
+        </div>
+    );
 }
 
 export default App;
