@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { ListadoTrabajos } from './ListadoTrabajos'
 
 export const Inicio = () => {
   return (
@@ -9,7 +10,7 @@ export const Inicio = () => {
         y ofrezco mis servicios de programación y <strong>desarrollo en proyectos web con Angular o React.</strong>
       </h1>
 
-      <h2>
+      <h2 className='title'>
         Te ayudo a crear tu sitio web.
         <Link to='/contacto'>Contacta conmigo</Link>
       </h2>
@@ -17,9 +18,7 @@ export const Inicio = () => {
       <section className='last-works'>
         <h2 className='heading'>Algunos de mis proyectos</h2>
         <p>Estos son algunos de mis trabajos de desarrollo web</p>
-        <div className='works'>
-
-        </div>
+        <ListadoTrabajos limite='2' />
       </section>
     </div>
   )

@@ -79,12 +79,12 @@
   color: rgb(70, 70, 168);
 }
 
-.home h2 {
+.home .title {
   color: gray;
   font-weight: lighter;
 }
 
-.home a {
+.home .title a {
   color: white;
   background: rgb(70, 70, 168);
   text-decoration: none;
@@ -94,7 +94,7 @@
   margin-left: 5px;
 }
 
-.home a:hover,
+.home .title a:hover,
 button:hover {
   background-color: blue;
 }
@@ -150,6 +150,8 @@ button {
 
 .work-item .mask{
   width: 100%;
+  height: 136px;
+  overflow: hidden;
 }
 
 .work-item .mask img:hover{
@@ -167,7 +169,7 @@ button {
 .work-item span {
   color: gray;
   display: block;
-  margin-top: 35px;
+  margin-top: 25px;
 }
 
 .work-item h2 {
@@ -190,4 +192,10 @@ button {
   color: black;
   text-decoration: none;
   transition: all 300ms;
+}
+
+.page-work .mask{
+  height: 300px;
+  overflow: hidden;
+  box-shadow: 0px 0px 20px #ddd;
 }
