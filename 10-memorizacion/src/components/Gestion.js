@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Empleados } from './Empleados'
+import { useCallback, useState } from 'react';
+import { Empleados } from './Empleados';
 
 export const Gestion = () => {
 
@@ -9,6 +9,10 @@ export const Gestion = () => {
     const asignarNombre = e => {
         setNombre(e.target.value);
     }
+
+    //Hook useCallback: memoriza la función para no ser llamada cada vez que cambie algo en el componente Gestion
+    //Solo se ejeuctará cuando la pagina se modifique
+    const mensaje = useCallback(() => { console.log('Mensaje ejecutado desde componente empleado')}, []);
 
     return (
         <div>
@@ -23,7 +27,7 @@ export const Gestion = () => {
             <button onClick={() => setPagina(1)}>Página 1</button>
             <button onClick={() => setPagina(2)}>Página 2</button>
             <p>Mostrando página: {pagina}</p>
-            <Empleados page={pagina} />
+            <Empleados page={pagina} mensaje={mensaje}/>
         </div>
     )
 }

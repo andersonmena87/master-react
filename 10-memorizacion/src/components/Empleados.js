@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 //React.memo evita que el componente se este cargando y solo lo hará si tiene un cambio
 export const Empleados = React.memo(
-    ({ page }) => {
+    ({ page , mensaje}) => {
         const [empleados, setEmpleados] = useState([]);
 
         useEffect(() => {
             conseguirEmpleados(page);
-        }, [page])
+            mensaje();
+        }, [page, mensaje]);
 
         const conseguirEmpleados = async (page) => {
             let url = `https://reqres.in/api/users?page=${page}`;
