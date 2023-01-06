@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+hr {
+  width: 98%;
+}
+
+#caja {
+  width: 200px;
+  height: 200px;
+  background-color: aqua;
+  font-weight: bold;
+}
