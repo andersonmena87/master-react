@@ -40,15 +40,26 @@ export const MisJuegos = () => {
   const borrarJuego = (e, id) => {
     e.preventDefault();
     console.log(id);
-
-    let newJuegos = juegos.filter(juego => juego.id !== id);
-
     let action = {
       type: 'borrar',
-      payload: newJuegos
+      payload: id
     }
 
-    localStorage.removeItem('juegos');
+    dispatch(action);
+  }
+
+  const editar = (e, juego) => {
+
+    let juegoEditado = {
+      id: juego.id,
+      titulo: e.target.value,
+      descipcion: juego.descripcion
+    }
+
+    let action = {
+      type: 'editar',
+      payload: juegoEditado
+    }
 
     dispatch(action);
   }
@@ -63,6 +74,8 @@ export const MisJuegos = () => {
             juegos.map((juego) => (
               <li key={juego.id}>
                 {juego.titulo}
+                <br/>
+                <input type="text" value={juego.titulo} onInput={e => editar(e, juego)}/>
                 &nbsp;<button onClick={ e => borrarJuego(e, juego.id)}>Borrar</button>
               </li>
             ))

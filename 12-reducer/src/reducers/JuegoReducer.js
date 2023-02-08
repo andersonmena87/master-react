@@ -5,8 +5,13 @@ export const JuegoReducer = (state = [], action) => {
         newState = [...state, action.payload];
     break;  
     case "borrar":
-      newState = action.payload;
-    break;  
+      newState = state.filter(juego => juego.id !== action.payload);
+    break; 
+    case "editar":
+      let indice = state.findIndex(juego => juego.id === action.payload.id);
+      state[indice] = action.payload;
+      newState = [...state];
+    break;   
     default:
         newState = state;
   }
