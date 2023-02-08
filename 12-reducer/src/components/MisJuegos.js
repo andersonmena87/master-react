@@ -37,6 +37,22 @@ export const MisJuegos = () => {
     console.log(juegos);
   }
 
+  const borrarJuego = (e, id) => {
+    e.preventDefault();
+    console.log(id);
+
+    let newJuegos = juegos.filter(juego => juego.id !== id);
+
+    let action = {
+      type: 'borrar',
+      payload: newJuegos
+    }
+
+    localStorage.removeItem('juegos');
+
+    dispatch(action);
+  }
+
   return (
     <div>
         <h1>Estos son mis video juegos</h1>
@@ -47,7 +63,7 @@ export const MisJuegos = () => {
             juegos.map((juego) => (
               <li key={juego.id}>
                 {juego.titulo}
-                &nbsp;<button>Borrar</button>
+                &nbsp;<button onClick={ e => borrarJuego(e, juego.id)}>Borrar</button>
               </li>
             ))
           }

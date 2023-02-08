@@ -1,13 +1,15 @@
 export const JuegoReducer = (state = [], action) => {
+  let newState;
   switch (action.type) {
     case "crear":
-        return [...state, action.payload];
+        newState = [...state, action.payload];
     break;  
     case "borrar":
-    
-    break;
+      newState = action.payload;
+    break;  
     default:
-        return state;
-    break;
+        newState = state;
   }
+
+  return newState;
 }
