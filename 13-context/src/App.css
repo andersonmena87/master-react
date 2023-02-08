@@ -1,0 +1,27 @@
+* {
+  margin: 0px;
+}
+
+header nav {
+  background-color: black;
+  color: white;
+  display: flex;
+  height: 80px;
+  align-items: center;
+}
+
+header ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  width: 65%;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+}
+
+header nav a:hover {
+  color: lightskyblue;
+}
