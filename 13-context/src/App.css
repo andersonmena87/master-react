@@ -2,26 +2,48 @@
   margin: 0px;
 }
 
+body {
+  background-color: #eee;
+}
+
 header nav {
   background-color: black;
   color: white;
   display: flex;
   height: 80px;
   align-items: center;
+  padding: 0 25px;
 }
 
 header ul {
   display: flex;
   list-style: none;
-  justify-content: space-around;
-  width: 65%;
+  justify-content: flex-end;
+  flex-basis: 75%;
 }
 
 header nav a {
   color: white;
   text-decoration: none;
+  margin: 0 10px;
 }
 
 header nav a:hover {
   color: lightskyblue;
+}
+
+.content {
+  width: 70%;
+  min-height: 350px;
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  margin: 25px auto;
+  padding: 25px;
+}
+
+.login input, .login button {
+  display: block;
+  margin: 15px;
+  padding: 15px;
 }

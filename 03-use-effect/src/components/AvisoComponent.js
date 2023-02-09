@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 export const AvisoComponent = ({ heroe }) => {
     useEffect(() => {
-        // Se ejecuta cuando se monta el componente, se agrega [] como segundo parametor
+        // Se ejecuta cuando se monta el componente, se agrega [] como segundo parametro
         alert('Componnente AvisoComponent está montado!!');
 
         //Cuando se desmonta

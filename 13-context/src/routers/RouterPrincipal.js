@@ -1,18 +1,22 @@
-import React from 'react'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useContext } from 'react'
 import {
   Routes,
   Route,
   NavLink,
   BrowserRouter,
-  Navigate,
 } from 'react-router-dom'
 import { Acerca } from '../components/Acerca'
 import { Articulos } from '../components/Articulos'
 import { Contacto } from '../components/Contacto'
 import { Inicio } from '../components/Inicio'
 import { Login } from '../components/Login'
+import { PruebaContext } from '../context/PruebaContext'
 
 export const RouterPrincipal = () => {
+
+  const { usuario, setUsuario } = useContext(PruebaContext);
+
   return (
     <BrowserRouter>
       <header>
@@ -34,9 +38,24 @@ export const RouterPrincipal = () => {
             <li>
               <NavLink to="/contacto">Contacto</NavLink>
             </li>
-            <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
+            {
+              usuario.hasOwnProperty('userName') && usuario.userName !== null ?  
+                <>
+                  <li>
+                    <NavLink to="/">{usuario.userName}</NavLink>
+                  </li>
+                  <li>
+                    <a href='#' onClick={
+                      e => {
+                        e.preventDefault();
+                        setUsuario({});  
+                      }
+                    }>Cerrar sesión</a>
+                  </li>
+                </>
+              :
+                <NavLink to="/login">Login</NavLink>
+            }
           </ul>
         </nav>
       </header>
