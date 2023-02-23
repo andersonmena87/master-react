@@ -143,7 +143,7 @@ body {
   font-size: 30px;
 }
 
-.home {
+.card {
   background: white;
   border-radius: 10px;
   box-shadow: 0px 0px 6px #ddd;
@@ -153,12 +153,12 @@ body {
   width: 80%;
 }
 
-.home h1 {
+.card h1 {
   font-size: 30px;
   color: #444;
 }
 
-.home p {
+.card p {
   display: block;
   margin-bottom: 40px;
 }
@@ -283,4 +283,12 @@ input[type="button"] {
 
 .mi-formulario input[type='submit']:hover {
   background-color: rgb(0, 65, 0);
+}
+
+.error {
+  color: red;
+}
+
+pre {
+  font-family: inherit;
 }

@@ -19,10 +19,9 @@ export const useForm = (objetoInicial = {}) => {
         e.preventDefault();
         const { target } = e;
 
-        let curso = serializarFormulario(target);
+        let data = serializarFormulario(target);
 
-        console.log(curso)
-        setFormulario(curso);
+        setFormulario(data);
     }
 
     const cambiado = ({ target }) => {
@@ -37,6 +36,7 @@ export const useForm = (objetoInicial = {}) => {
     return {
         formulario,
         cambiado,
-        enviar
+        enviar,
+        setFormulario
     }
 }

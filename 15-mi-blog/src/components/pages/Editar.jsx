@@ -1,36 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useForm } from '../../hooks/useForm';
+import { Ajax } from '../../helpers/Ajax';
+import { Global } from '../../helpers/Global';
 
-export const Editar = ({articulo}) => {
-  const { formulario, enviar } = useForm();
-  const [cargando, setCargando] = useState(false);
+export const Editar = () => {
+  const { id } = useParams();
+  const { formulario, setFormulario, cambiado } = useForm();
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
   const navegar = useNavigate();
 
-  useEffect(() => {
-    if(Object.hasOwn(formulario, '_id')){
-      guardarArticulo();
-    }
-  }, [formulario]);
 
-  const guardarArticulo = async () => {
-    let { datos, cargando } = await Ajax(Global.urlApi + 'crear/' + formulario["_id"], 'PUT', formulario);
+  const getArticulo = async() => {
+    const { datos } = await Ajax(Global.urlApi + 'articulo/' + id);
+    setFormulario(datos.articulo);
+    setCargando(false);
+  }
+
+  useEffect(() => {
+    getArticulo();
+  }, []);
+
+  const guardarArticulo = async (e) => {
+    e.preventDefault();
+    setError('');
+    console.log('formulario', formulario);
+    let { datos, cargando } = await Ajax(Global.urlApi + 'articulo/' + formulario._id, 'PUT', formulario);
 
     if (datos.status === 'success') {
       alert('Articulo actualizado!');
+      navegar('/articulos');
+    }else{
+      setError(datos.mensaje);
     }
 
     setCargando(cargando);
-    navegar('/articulos');
+    
   }
 
   return (
     <div>
       <h1>Editar articulo</h1>
+      {error &&
+        <strong className='error'>{error}!</strong>
+      }
       {!cargando && 
-        <form onSubmit={enviar} className='mi-formulario'>
-        <input type='hidden' name='_id' value={articulo._id}/>
-        <input name='titulo' placeholder='Titulo' value={articulo.titulo}/>
-        <textarea name='contenido' placeholder='contenido' value={articulo.contenido}/>
-        <input type='submit' value='Enviar' />
+        <form onSubmit={ guardarArticulo } className='mi-formulario'>
+        <input name='titulo' placeholder='Titulo' defaultValue={formulario.titulo} onInput={ cambiado }/>
+        <textarea name='contenido' placeholder='contenido' defaultValue={formulario.contenido} onInput={ cambiado }/>
+        <input type='submit' value='Guardar' />
       </form>
       }
     </div>

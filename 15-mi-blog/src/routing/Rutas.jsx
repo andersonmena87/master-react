@@ -6,6 +6,7 @@ import { Nav } from '../components/layout/Nav';
 import { Sidebar } from '../components/layout/Sidebar';
 import { Articulos } from '../components/pages/Articulos';
 import { Crear } from '../components/pages/Crear';
+import { Editar } from '../components/pages/Editar';
 import { Inicio } from '../components/pages/Inicio';
 
 export const Rutas = () => {
@@ -23,6 +24,7 @@ export const Rutas = () => {
                     <Route path='/inicio' element={<Inicio />} />
                     <Route path='/articulos' element={<Articulos />} />
                     <Route path='/crear-articulo' element={<Crear />} />
+                    <Route path='/editar-articulo/:id' element={<Editar />} />
                 </Routes>
             </section>
             <Sidebar />

@@ -1,15 +1,22 @@
-export const Ajax = async (url, metodo = "GET", datosGuardar) => {
+export const Ajax = async (url, metodo = "GET", datosGuardar, archivos = false) => {
     let cargando = true;
     let opciones = {
         method: metodo
     }
 
     if (metodo == 'POST' || metodo == 'PUT') {
-        opciones = {
-            method: metodo,
-            body: JSON.stringify(datosGuardar),
-            headers: {
-                'Content-Type': 'application/json'
+        if(archivos){
+            opciones = {
+                method: metodo,
+                body: datosGuardar
+            }
+        }else{
+            opciones = {
+                method: metodo,
+                body: JSON.stringify(datosGuardar),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
         }
     }
