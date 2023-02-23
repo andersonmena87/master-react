@@ -105,12 +105,15 @@ body {
   display: flex;
   /* los elementos se ordenan en filas por el row, wrap hace que se organice el elemento 
   en la próxima fila si ya no tiene espacio */
-  flex-flow: row wrap;
+  /* flex-flow: row wrap; */
+  flex-flow: column wrap;
+
 
   /* Justificacion horizontal */
   justify-content: flex-start;
   /* Justificaión vertical */
-  align-items: flex-start;
+  /* align-items: flex-start; */
+  align-items: initial;
 }
 
 .articulo-item {
@@ -121,11 +124,50 @@ body {
   box-shadow: 0px 0px 6px #ddd;
   margin: 20px;
   padding: 60px 25px;
+  text-align: left;
+  display: flex;
+  max-height: 225px;
 }
 
+.articulo-item .mascara {
+  width: 20%;
+  margin-right: 40px;
+}
+
+.articulo-item img {
+  width: 100%;
+  overflow: hidden;
+}
+
+.articulo-item h3 {
+  font-size: 30px;
+}
+
+.home {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #ddd;
+  margin: 25px auto;
+  padding: 55px;
+  padding-bottom: 75px;
+  width: 80%;
+}
+
+.home h1 {
+  font-size: 30px;
+  color: #444;
+}
+
+.home p {
+  display: block;
+  margin-bottom: 40px;
+}
+
+.button,
 button, 
 input[type="submit"],
 input[type="button"] {
+  text-decoration: none;
   background: linear-gradient(160deg,  #03228f 0%, #0b70e1 77%);
   color: white;
   border: 0;
@@ -144,6 +186,10 @@ input[type="button"] {
   transition: all 300ms;
 }
 
+.articulo-item .edit{
+  margin-right: 20px;
+}
+
 .articulo-item .edit:hover {
   background: #e77b00;
 }
@@ -158,6 +204,7 @@ input[type="button"] {
   background: #f6f7f9;
   border-left: 1px solid #ddd;
   padding: 20px;
+  min-height: 340px;
 }
 
 /* Cada div que sea hijo de lateral */
@@ -214,4 +261,26 @@ input[type="button"] {
   .articulo-item{
       width: 80%;
   }
+}
+
+.mi-formulario input, .mi-formulario textarea {
+  display: block;
+  width: 80%;
+  max-width: 300px;
+  margin: 15px auto;
+  padding: 10px;
+}
+
+.mi-formulario input[type='submit'] {
+  width: 100px;
+  cursor: pointer;
+  margin-bottom: 100px;
+  background-color: green;
+  color: white;
+  border: 0px;
+  border-radius:3px;
+}
+
+.mi-formulario input[type='submit']:hover {
+  background-color: rgb(0, 65, 0);
 }
