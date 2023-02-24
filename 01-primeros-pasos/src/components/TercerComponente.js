@@ -49,5 +49,5 @@ TercerComponente.propTypes = {
 TercerComponente.defaultProps = {
     nombre: "Juan",
     apellidos: "Martinez",
-    parametroDefaultProps: "Parametro desde el defultPorps",
+    parametroDefaultProps: "Parametro desde el defultProps",
 }

@@ -25,9 +25,9 @@ export const Articulos = () => {
   return (
     <>
       {cargando ?
-          <h1>'Cargando..'</h1>
+          <h1>Cargando..</h1>
         :
-          articulos.length > 0 ? <ListadoArticulos articulos={articulos} />: <h1>No hay artículos</h1>
+          articulos.length > 0 ? <ListadoArticulos articulos={ articulos } setArticulos={ setArticulos } />: <h1>No hay artículos</h1>
       }
     </>
   )

@@ -25,7 +25,6 @@ export const Editar = () => {
   const guardarArticulo = async (e) => {
     e.preventDefault();
     setError('');
-    console.log('formulario', formulario);
     let { datos, cargando } = await Ajax(Global.urlApi + 'articulo/' + formulario._id, 'PUT', formulario);
 
     if (datos.status === 'success') {
