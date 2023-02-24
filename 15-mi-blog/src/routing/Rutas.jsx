@@ -26,7 +26,7 @@ export const Rutas = () => {
                     <Route path='/articulos' element={<Articulos />} />
                     <Route path='/crear-articulo' element={<Crear />} />
                     <Route path='/editar-articulo/:id' element={<Editar />} />
-                    <Route path='/buscar/:palabra' element={<Busqueda />} />
+                    <Route path='/buscar/:palabra?' element={<Busqueda />} />
                     <Route path='*' element={
                         <div className='card'>
                             Error 404 no existe la página ingresada

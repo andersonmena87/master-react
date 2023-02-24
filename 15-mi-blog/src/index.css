@@ -72,6 +72,7 @@ body {
   justify-content: center;
   align-items: center;
   list-style: none;
+  padding: 0;
 }
 
 /* nav que contengan una ul y ul que contenga li */

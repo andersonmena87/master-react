@@ -14,15 +14,20 @@ export const Busqueda = () => {
   }, [palabra]);
 
   const conseguirArticulos = async () => {
-    let { datos, cargando } = await Ajax(Global.urlApi + 'buscar/' + palabra);
+    if(palabra){
+      let { datos, cargando } = await Ajax(Global.urlApi + 'buscar/' + palabra);
 
-    if (datos.status === 'success') {
-      setArticulos(datos.articulos);
+      if (datos.status === 'success') {
+        setArticulos(datos.articulos);
+      }else{
+        setArticulos([]);
+      }
+  
+      setCargando(cargando);
     }else{
-      setArticulos([]);
+      setCargando(false);
     }
-
-    setCargando(cargando);
+    
   }
 
   return (
