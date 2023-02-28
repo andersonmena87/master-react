@@ -23,6 +23,8 @@ body {
   /* Se define el alto para cada elemento: header nav content/lateral footer ; */
   grid-template-rows: 100px 70px auto 70px;
 
+  /* Ajusta el ancho de cada columna */
+  grid-template-columns: 1fr 1fr 1fr 25%;
 }
 
 /* Estilos cabecera */
@@ -142,6 +144,15 @@ body {
 
 .articulo-item h3 {
   font-size: 30px;
+}
+
+.articulo-item h3 a {
+  text-decoration: none;
+  color: black;
+}
+
+.articulo-item h3 a:hover {
+  color: rgb(44, 22, 124);
 }
 
 .card {

@@ -12,7 +12,7 @@ export const Editar = () => {
   const navegar = useNavigate();
 
 
-  const getArticulo = async() => {
+  const getArticulo = async () => {
     const { datos } = await Ajax(Global.urlApi + 'articulo/' + id);
     setFormulario(datos.articulo);
     setCargando(false);
@@ -28,14 +28,32 @@ export const Editar = () => {
     let { datos, cargando } = await Ajax(Global.urlApi + 'articulo/' + formulario._id, 'PUT', formulario);
 
     if (datos.status === 'success') {
-      alert('Articulo actualizado!');
-      navegar('/articulos');
-    }else{
+      const fileInput = document.querySelector("#file");
+
+      if (fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('file0', fileInput.files[0]);
+
+        const subir = await Ajax(Global.urlApi + 'subir-imagen/' + datos.articulo._id, 'POST', formData, true);
+
+        if (subir.datos.status !== 'success') {
+          setError(subir.datos.mensaje);
+        }
+      }
+
+      if(error === ''){
+        alert('Articulo actualizado!');
+        navegar('/articulos');
+      }else{
+        alert(error);
+      }
+      
+    } else {
       setError(datos.mensaje);
     }
 
     setCargando(cargando);
-    
+
   }
 
   return (
@@ -44,12 +62,18 @@ export const Editar = () => {
       {error &&
         <strong className='error'>{error}!</strong>
       }
-      {!cargando && 
-        <form onSubmit={ guardarArticulo } className='mi-formulario'>
-        <input name='titulo' placeholder='Titulo' defaultValue={formulario.titulo} onInput={ cambiado }/>
-        <textarea name='contenido' placeholder='contenido' defaultValue={formulario.contenido} onInput={ cambiado }/>
-        <input type='submit' value='Guardar' />
-      </form>
+      {!cargando &&
+        <form onSubmit={guardarArticulo} className='mi-formulario'>
+          <input name='titulo' placeholder='Titulo' defaultValue={formulario.titulo} onInput={cambiado} />
+          <textarea name='contenido' placeholder='contenido' defaultValue={formulario.contenido} onInput={cambiado} />
+          <div className='mascara'>
+            {formulario.imagen &&
+              <img src={Global.urlApi + 'imagen/' + formulario.imagen} />
+            }
+          </div>
+          <input type='file' name='file0' id='file' />
+          <input type='submit' value='Guardar' />
+        </form>
       }
     </div>
   )

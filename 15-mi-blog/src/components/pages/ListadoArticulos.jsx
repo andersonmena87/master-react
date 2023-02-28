@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Ajax } from '../../helpers/Ajax';
 import { Global } from '../../helpers/Global';
 
@@ -47,7 +47,7 @@ export const ListadoArticulos = ({ articulos, setArticulos }) => {
           </div>
           <div className='datos'>
             <h3 className="title">
-              {articulo.titulo}
+              <Link to={'/articulo/'+articulo._id}>{articulo.titulo}</Link>
             </h3>
             <pre className="description">
                 {articulo.contenido}

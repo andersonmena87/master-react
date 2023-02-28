@@ -4,6 +4,7 @@ import { Footer } from '../components/layout/Footer';
 import { Header } from '../components/layout/Header';
 import { Nav } from '../components/layout/Nav';
 import { Sidebar } from '../components/layout/Sidebar';
+import { Articulo } from '../components/pages/Articulo';
 import { Articulos } from '../components/pages/Articulos';
 import { Busqueda } from '../components/pages/Busqueda';
 import { Crear } from '../components/pages/Crear';
@@ -27,6 +28,7 @@ export const Rutas = () => {
                     <Route path='/crear-articulo' element={<Crear />} />
                     <Route path='/editar-articulo/:id' element={<Editar />} />
                     <Route path='/buscar/:palabra?' element={<Busqueda />} />
+                    <Route path='/articulo/:id?' element={<Articulo />} />
                     <Route path='*' element={
                         <div className='card'>
                             Error 404 no existe la página ingresada
