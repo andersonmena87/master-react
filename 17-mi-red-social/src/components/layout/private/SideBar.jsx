@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import avatar from '../../../assets/img/user.png';
 
 export const SideBar = () => {
     return (
@@ -14,7 +15,7 @@ export const SideBar = () => {
 
                     <div className="profile-info__general-info">
                         <div className="general-info__container-avatar">
-                            <img src="assets/img/user.png" className="container-avatar__img" alt="Foto de perfil" />
+                            <img src={avatar} className="container-avatar__img" alt="Foto de perfil" />
                         </div>
 
                         <div className="general-info__container-names">
