@@ -3,6 +3,7 @@ import { PrivateLayout } from '../components/layout/private/PrivateLayout';
 import { PublicLayout } from '../components/layout/public/PublicLayout';
 import { Feed } from '../components/publication/Feed';
 import { Login } from '../components/user/Login';
+import { Logout } from '../components/user/Logout';
 import { Register } from '../components/user/Register';
 import { AuthProvider } from '../context/AuthProvider';
 
@@ -21,6 +22,7 @@ export const Routing = () => {
                     <Route path='/social' element={<PrivateLayout />}>
                         <Route index element={<Feed />} />
                         <Route path='feed' element={<Feed />} />
+                        <Route path='logout' element={<Logout />} />
                     </Route>
 
                     <Route path="*" element={

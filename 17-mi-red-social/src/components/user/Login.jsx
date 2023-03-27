@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { saveDataLocal } from '../../helpers/LocalStorage';
+import useAuth from '../../hooks/useAuth';
 
 export const Login = () => {
   const { form, changed } = useForm({});
   const [logged, setLogged] = useState('');
-  const { saveDataLocal } = useLocalStorage();
   const [ messageRequest, setMessageRequest ] = useState('');
+  const { setAuth } = useAuth();
+  const butonIdentificate = useRef();
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -29,12 +31,27 @@ export const Login = () => {
     if (data.status === 'success') {
       setLogged('logged');
 
-      // Persistir datos en el navegador
+      // Persistir datos en el navegador(LocalStorage)
       saveDataLocal(
         {
           token: data.token,
           user: data.user
         })
+
+        // Seteamos el auth por defecto con los datos del usuario que se acaba de loguear
+        setAuth(data.user);
+
+        // Redirección despues del logueo
+        
+          // Deshabilitando el botón Identificate
+          butonIdentificate.current.disabled = true;
+          butonIdentificate.current.style.opacity = 0.5;
+
+          // Tiempo de espera para redirección de 1seg
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+
     } else {
       setLogged('error');
     }
@@ -73,7 +90,7 @@ export const Login = () => {
             <input type='password' name='password' onChange={changed} />
           </div>
 
-          <button type='submit' className='btn btn-success'>Identificate</button>
+          <button type='submit' className='btn btn-success' ref={butonIdentificate}>Identificate</button>
         </form>
       </div>
     </>

@@ -1,6 +1,10 @@
+import { NavLink } from 'react-router-dom';
 import avatar from '../../../assets/img/user.png';
+import { Global } from '../../../helpers/Global';
+import useAuth from '../../../hooks/useAuth';
 
 export const Nav = () => {
+    const { auth } = useAuth();
     return (
         <nav className="navbar__container-lists">
 
@@ -30,12 +34,18 @@ export const Nav = () => {
             <ul className="container-lists__list-end">
                 <li className="list-end__item">
                     <a href="#" className="list-end__link-image">
-                        <img src={avatar} className="list-end__img" alt="Imagen de perfil" />
+                        {auth.image !== 'default.png' &&
+                            <img src={Global.url + "user/avatar/" + auth.image} className="list-end__img" alt="Imagen de perfil" />
+                        }
+
+                        {auth.image === 'default.png' &&
+                            <img src={avatar} className="list-end__img" alt="Imagen de perfil" />
+                        }
                     </a>
                 </li>
                 <li className="list-end__item">
                     <a href="#" className="list-end__link">
-                        <span className="list-end__name">nickname</span>
+                        <span className="list-end__name">{auth.nick}</span>
                     </a>
                 </li>
                 <li className="list-end__item">
@@ -45,10 +55,10 @@ export const Nav = () => {
                     </a>
                 </li>
                 <li className="list-end__item">
-                    <a href="#" className="list-end__link">
+                    <NavLink to='/social/logout' className="list-end__link">
                         <i className='fa-solid fa-arrow-right-from-bracket'></i>
                         <span className="list-end__name">Cerrar sesión</span>
-                    </a>
+                    </NavLink>
                 </li>
             </ul>
 

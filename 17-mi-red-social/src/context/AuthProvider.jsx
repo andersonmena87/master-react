@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { getDataLocal } from '../helpers/LocalStorage';
 import { Global } from '../helpers/Global';
 
 const AuthContext = createContext();
@@ -7,8 +7,9 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     const [ auth, setAuth ] = useState({});
-    const { getDataLocal } = useLocalStorage();
-
+    const [ counters, setCounters ] = useState({});
+    const [ loading, setLoading ] = useState(true);
+    
     useEffect(() => {
         authUser();
     }, []);
@@ -18,10 +19,9 @@ export const AuthProvider = ({ children }) => {
         const token = getDataLocal('token');
         const user = getDataLocal('user');
 
-        console.log('user', user)
-        console.log('token', token)
-        // Comprobar si tengo el token y el user
+        // Comprobar si tengo el token y el usuario
         if (!token || !user) {
+            setLoading(false);
             return false;
         }
 
@@ -38,8 +38,21 @@ export const AuthProvider = ({ children }) => {
 
         const data = await request.json();
 
+        // Petición para los contadores
+        const requestCounters = await fetch(Global.url + 'user/counters/' + userId, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        });
+
+        const dataCounters = await requestCounters.json();
+
         // Setear estado de auth
-        setAuth(data.user);
+        setAuth(data.userStored);
+        setCounters(dataCounters);
+        setLoading(false);
     }
 
     return (
@@ -47,7 +60,10 @@ export const AuthProvider = ({ children }) => {
             value={
                 {
                     auth,
-                    setAuth
+                    setAuth,
+                    counters,
+                    setCounters,
+                    loading
                 }
             }
         >
