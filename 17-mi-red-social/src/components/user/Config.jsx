@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Global } from '../../helpers/Global';
 import { SerializeForm } from '../../helpers/SerializeForm';
@@ -6,11 +6,15 @@ import { getDataLocal } from '../../helpers/LocalStorage';
 
 export const Config = () => {
 
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [saved, setSaved] = useState('not-saved');
+  const fileInput = useRef();
 
   const updateUser = async(e) => {
     e.preventDefault();
+
+    // Obtener token
+    const token = getDataLocal('token');
 
     // Recoger datos del formulario
     let newDataUser = SerializeForm(e.target);
@@ -24,16 +28,43 @@ export const Config = () => {
       body: JSON.stringify(newDataUser),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': getDataLocal('token')
+        'Authorization': token
       }
     });
 
     const data = await request.json();
 
     if(data.status === 'success'){
+      setAuth(data.user);
       setSaved('saved')
     }else{
       setSaved('error')
+    }
+
+    // Subida de imagenes
+    if(data.status === 'success' && fileInput.current.files[0]){
+      
+      // Recoger imagen a subir  
+      const formData = new FormData();
+      formData.append('file0', fileInput.current.files[0]);
+
+      // Peticion para envier fichero
+      const uploadRequest = await fetch(Global.url + 'user/upload', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      const uploadData = await uploadRequest.json();
+
+      if(uploadData.status === 'success'){
+        setSaved('saved');
+        setAuth(uploadData.user);
+      }else{
+        setSaved('error');
+      }
     }
   }
 
@@ -92,11 +123,11 @@ export const Config = () => {
                 <img src={avatar} className="container-avatar__img" alt="Foto de perfil" />
               }
             </div>
-            <input type='file' name='file0' id='file' />
+            <input type='file' name='file0' id='file' ref={ fileInput } />
             <br />
           </div>
           <br />
-          <button type='submit' className='btn btn-success'>Registrate</button>
+          <button type='submit' className='btn btn-success'>Actualizar</button>
 
         </form>
       </div>
