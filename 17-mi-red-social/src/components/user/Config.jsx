@@ -113,6 +113,11 @@ export const Config = () => {
           </div>
 
           <div className="form-group">
+            <label htmlFor='bio'>Biografía</label>
+            <textarea type="text" name="bio" defaultValue={auth.bio} />
+          </div>
+
+          <div className="form-group">
             <label htmlFor='file0'>Avatar</label>
             <div className="general-info__container-avatar">
               {auth.image !== 'default.png' &&

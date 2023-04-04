@@ -78,6 +78,11 @@ export const Register = () => {
             <input type="password" name="password" onChange={changed} />
           </div>
 
+          <div className="form-group">
+            <label htmlFor='bio'>Biografía</label>
+            <input type="text" name="bio" onChange={changed} />
+          </div>
+
           <button type='submit' className='btn btn-success'>Registrate</button>
 
         </form>
