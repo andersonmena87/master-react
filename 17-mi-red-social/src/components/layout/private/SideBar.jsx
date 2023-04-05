@@ -41,7 +41,7 @@ export const SideBar = () => {
         // Subir imagen
         const fileInput = document.querySelector('#file');
 
-        if(data.status === "success" && fileInput.files[0]){
+        if (data.status === "success" && fileInput.files[0]) {
             const formData = new FormData();
             formData.append('file0', fileInput.files[0]);
 
@@ -50,23 +50,23 @@ export const SideBar = () => {
                 body: formData,
                 headers: {
                     Authorization: token
-                } 
+                }
             })
 
             const uploadData = await uploadRequest.json();
 
-            if(uploadData.status === 'success'){
+            if (uploadData.status === 'success') {
                 setStored('saved');
-            }else{
+            } else {
                 setStored('error');
             }
         }
 
-        if(stored === 'saved'){
+        if (stored === 'saved') {
             const publicationForm = document.querySelector("#publication-form");
             publicationForm.reset();
         }
-        
+
     }
 
     return (
@@ -83,16 +83,16 @@ export const SideBar = () => {
                     <div className="profile-info__general-info">
                         <div className="general-info__container-avatar">
                             {auth.image !== 'default.png' &&
-                                <img src={Global.url + "user/avatar/" + auth.image} className="container-avatar__img" alt="Foto de perfil" />
+                                <img src={Global.url + "user/avatar/" + auth.image} className="general-info__container-avatar" alt="Foto de perfil" />
                             }
 
                             {auth.image === 'default.png' &&
-                                <img src={avatar} className="container-avatar__img" alt="Foto de perfil" />
+                                <img src={avatar} className="general-info__container-avatar" alt="Foto de perfil" />
                             }
                         </div>
 
                         <div className="general-info__container-names">
-                            <a href="#" className="container-names__name">{auth.name} {auth.surname}</a>
+                            <Link to={'/social/perfil/' + auth._id} className="container-names__name">{auth.name} {auth.surname}</Link>
                             <p className="container-names__nickname">{auth.nick}</p>
                         </div>
                     </div>
@@ -114,10 +114,10 @@ export const SideBar = () => {
 
 
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={'perfil/' + auth._id} className="following__link">
                                 <span className="following__title">Publicaciones</span>
                                 <span className="following__number">{counters.publications}</span>
-                            </a>
+                            </Link>
                         </div>
 
 
@@ -147,7 +147,7 @@ export const SideBar = () => {
                             <input type="file" name="file0" id='file' className="form-post__image" />
                         </div>
 
-                        <input type="submit" value="Enviar" className="form-post__btn-submit"/>
+                        <input type="submit" value="Enviar" className="form-post__btn-submit" />
 
                     </form>
 

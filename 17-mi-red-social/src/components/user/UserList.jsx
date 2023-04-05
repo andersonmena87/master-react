@@ -3,6 +3,7 @@ import avatar from '../../assets/img/user.png';
 import { Global } from '../../helpers/Global';
 import { getDataLocal } from '../../helpers/LocalStorage';
 import useAuth from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export const UserList = ({ users, following, setFollowing, loading, more, page, setPage, getUsers }) => {
     const { auth } = useAuth();
@@ -70,7 +71,7 @@ export const UserList = ({ users, following, setFollowing, loading, more, page, 
                     <article key={user._id} className="posts__post">
                         <div className="post__container">
                             <div className="post__image-user">
-                                <a href="#" className="post__image-link">
+                                <Link to={'/social/perfil/' + user._id} className="post__image-link">
                                     {user.image !== 'default.png' && (
                                         <img
                                             src={Global.url + 'user/avatar/' + user.image}
@@ -86,25 +87,26 @@ export const UserList = ({ users, following, setFollowing, loading, more, page, 
                                             alt="Foto de perfil"
                                         />
                                     )}
-                                </a>
+                                </Link>
                             </div>
 
                             <div className="post__body">
                                 <div className="post__user-info">
-                                    <a href="#" className="user-info__name">
+                                    <Link to={'/social/perfil/' + user._id} className="user-info__name">
                                         {user.name} {user.surname}
-                                    </a>
+                                    </Link>
                                     <span className="user-info__divider"> | </span>
-                                    <a href="#" className="user-info__create-date">
+                                    <Link to={'/social/perfil/' + user._id} className="user-info__create-date">
                                         {user.create_at}
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 <h4 className="post__content">{user.bio}</h4>
                             </div>
                         </div>
 
-                        {auth._id != user._id &&
+                        {auth._id != user._id
+                            ?
                             <div className="post__buttons">
 
                                 {!following.includes(user._id) &&
@@ -121,6 +123,8 @@ export const UserList = ({ users, following, setFollowing, loading, more, page, 
                                 }
 
                             </div>
+                            :
+                            <></>
                         }
                     </article>
                 ))}

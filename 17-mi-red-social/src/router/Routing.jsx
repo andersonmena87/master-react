@@ -10,6 +10,7 @@ import { Register } from '../components/user/Register';
 import { AuthProvider } from '../context/AuthProvider';
 import { Following } from '../components/follow/Following';
 import { Followers } from '../components/follow/Followers';
+import { Profile } from '../components/user/Profile';
 
 export const Routing = () => {
     return (
@@ -31,6 +32,7 @@ export const Routing = () => {
                         <Route path='update' element={<Update />} />
                         <Route path='siguiendo/:userId' element={<Following />} />
                         <Route path='seguidores/:userId' element={<Followers />} />
+                        <Route path='perfil/:userId' element={<Profile />} />
                     </Route>
 
                     <Route path="*" element={
