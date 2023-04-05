@@ -5,7 +5,7 @@ import { Feed } from '../components/publication/Feed';
 import { Login } from '../components/user/Login';
 import { Logout } from '../components/user/Logout';
 import { People } from '../components/user/People';
-import { Config } from '../components/user/Config';
+import { Update } from '../components/user/Update';
 import { Register } from '../components/user/Register';
 import { AuthProvider } from '../context/AuthProvider';
 
@@ -26,7 +26,7 @@ export const Routing = () => {
                         <Route path='feed' element={<Feed />} />
                         <Route path='logout' element={<Logout />} />
                         <Route path='people' element={<People />} />
-                        <Route path='config' element={<Config />} />
+                        <Route path='update' element={<Update />} />
                     </Route>
 
                     <Route path="*" element={

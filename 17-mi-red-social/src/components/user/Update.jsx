@@ -4,7 +4,7 @@ import { Global } from '../../helpers/Global';
 import { SerializeForm } from '../../helpers/SerializeForm';
 import { getDataLocal } from '../../helpers/LocalStorage';
 
-export const Config = () => {
+export const Update = () => {
 
   const { auth, setAuth } = useAuth();
   const [saved, setSaved] = useState('not-saved');

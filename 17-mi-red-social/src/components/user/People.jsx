@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import avatar from '../../assets/img/user.png'
-import { Global } from '../../helpers/Global'
-import { getDataLocal } from '../../helpers/LocalStorage'
+import React, { useEffect, useState } from 'react';
+import { Global } from '../../helpers/Global';
+import { getDataLocal } from '../../helpers/LocalStorage';
+import { UserList } from './UserList';
 
 export const People = () => {
-  const [users, setUsers] = useState([])
-  const [page, setPage] = useState(1)
-  const [more, setMore] = useState(true)
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [more, setMore] = useState(true);
+  const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Obtener token
+  const token = getDataLocal('token');
+
   useEffect(() => {
-    getUsers(1)
-  }, [])
+    getUsers(1);
+  }, []);
 
   const getUsers = async (nextPage = 1) => {
 
     // Efecto cargando
-    setLoading(true)
-
-    // Obtener token
-    const token = getDataLocal('token')
+    setLoading(true);
 
     // Petición para sacar usuarios
     const request = await fetch(Global.url + 'user/list/' + nextPage, {
@@ -30,35 +31,27 @@ export const People = () => {
       },
     })
 
-    const data = await request.json()
+    const data = await request.json();
 
     // Crear estado para listarlos
 
     if (data.users && data.status === 'success') {
       if (users.length === 0) {
-        setUsers(data.users)
+        setUsers(data.users);
       } else {
-        let newUsers = [...users, ...data.users]
+        let newUsers = [...users, ...data.users];
 
-        setUsers(newUsers)
+        setUsers(newUsers);
       }
 
-      setLoading(false)
+      setFollowing(data.user_following);
+      setLoading(false);
 
       // Paginación
-      if (users.length >= data.total) {
-        setMore(false)
+      if (users.length >= (data.total - data.users.length)) {
+        setMore(false);
       }
     }
-  }
-
-  const nextPage = () => {
-    let next = page + 1
-    setPage(next)
-
-    // El estado page tiene un pequeño retraso por eso
-    // se envia next como parametro en el getUsers
-    getUsers(next)
   }
 
   return (
@@ -67,67 +60,17 @@ export const People = () => {
         <h1 className="content__title">Gente</h1>
       </header>
 
-      <div className="content__posts">
-        {users.map((user) => (
-          <article key={user._id} className="posts__post">
-            <div className="post__container">
-              <div className="post__image-user">
-                <a href="#" className="post__image-link">
-                  {user.image !== 'default.png' && (
-                    <img
-                      src={Global.url + 'user/avatar/' + user.image}
-                      className="post__user-image"
-                      alt="Foto de perfil"
-                    />
-                  )}
+      <UserList
+        users={users}
+        getUsers={getUsers}
+        following={following}
+        setFollowing={setFollowing}
+        loading={loading}
+        more={more}
+        page={page}
+        setPage={setPage}
+      />
 
-                  {user.image === 'default.png' && (
-                    <img
-                      src={avatar}
-                      className="post__user-image"
-                      alt="Foto de perfil"
-                    />
-                  )}
-                </a>
-              </div>
-
-              <div className="post__body">
-                <div className="post__user-info">
-                  <a href="#" className="user-info__name">
-                    {user.name} {user.surname}
-                  </a>
-                  <span className="user-info__divider"> | </span>
-                  <a href="#" className="user-info__create-date">
-                    {user.create_at}
-                  </a>
-                </div>
-
-                <h4 className="post__content">{user.bio}</h4>
-              </div>
-            </div>
-
-            <div className="post__buttons">
-              <a href="#" className="post__button post__button--green">
-                Seguir
-              </a>
-
-              {/* <a href="#" className="post__button">
-        Dejar de seguir
-    </a> */}
-            </div>
-          </article>
-        ))}
-      </div>
-
-    { loading && <div>Cargando...</div>}
-
-      {more && (
-        <div className="content__container-btn">
-          <button className="content__btn-more-post" onClick={nextPage}>
-            Ver mas personas
-          </button>
-        </div>
-      )}
     </section>
   )
 }
