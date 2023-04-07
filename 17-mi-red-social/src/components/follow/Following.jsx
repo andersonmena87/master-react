@@ -30,7 +30,7 @@ export const Following = () => {
 
       // Sacar userId de la URL
       const userId = params.userId;
-  
+      
       // Petición para sacar usuarios
       const request = await fetch(Global.url + 'follow/following/'+ userId + "/" + nextPage, {
         method: 'GET',

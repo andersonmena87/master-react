@@ -105,10 +105,9 @@ export const UserList = ({ users, following, setFollowing, loading, more, page, 
                             </div>
                         </div>
 
-                        {auth._id != user._id
-                            ?
+                        {auth._id != user._id &&
+                        
                             <div className="post__buttons">
-
                                 {!following.includes(user._id) &&
                                     <button className="post__button post__button--green"
                                         onClick={() => follow(user._id)}>
@@ -123,8 +122,6 @@ export const UserList = ({ users, following, setFollowing, loading, more, page, 
                                 }
 
                             </div>
-                            :
-                            <></>
                         }
                     </article>
                 ))}

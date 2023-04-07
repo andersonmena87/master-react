@@ -5,6 +5,7 @@ import { GetProfile } from '../../helpers/GetProfile';
 import { Global } from '../../helpers/Global';
 import { getDataLocal } from '../../helpers/LocalStorage';
 import useAuth from '../../hooks/useAuth';
+import { PublicationList } from '../publication/PublicationList';
 
 export const Profile = () => {
     const params = useParams();
@@ -12,13 +13,15 @@ export const Profile = () => {
     const [counters, setCounters] = useState({});
     const [iFollow, setIFollow] = useState(false);
     const [publications, setPublications] = useState([]);
+    const [page, setPage ] = useState(1);
+    const [more, setMore ] = useState(true);
     const token = getDataLocal('token');
     const { auth } = useAuth();
 
     useEffect(() => {
         getDataUser();
         getCounters();
-        getPublications(1);
+        getPublications(1, true);
     }, [params]);
 
     const getDataUser = async () => {
@@ -83,7 +86,7 @@ export const Profile = () => {
 
     }
 
-    const getPublications = async (nextPage = 1) => {
+    const getPublications = async (nextPage = 1, newProfile = false) => {
         const request = await fetch(Global.url + 'publication/user/' + params.userId + '/' + nextPage, {
             method: 'GET',
             headers: {
@@ -95,10 +98,30 @@ export const Profile = () => {
         const data = await request.json();
 
         if (data.status === 'success') {
-            setPublications(data.publications);
-        }
+            if (publications.length == 0) {
+                setPublications(data.publications);
+            } else {
+                if (newProfile) {
+                    setPublications(data.publications);
+                    setMore(true);
+                    setPage(1);
+                } else {
+                    setPublications([
+                        ...publications,
+                        ...data.publications
+                    ]);
+                }
+            }
 
-        console.log(publications)
+            if (!newProfile && publications.length >= data.total - data.publications.length) {
+                setMore(false);
+            }
+
+            if (data.pages <= 1) {
+                setMore(false);
+            }
+
+        }
     }
 
     return (
@@ -119,15 +142,13 @@ export const Profile = () => {
                     <div className="general-info__container-names">
                         <div className="container-names__name">
                             <h1>{userProfile.name} {userProfile.surname}</h1>
-                            {userProfile._id != auth._id
-                                ?
-                                iFollow
+                            {userProfile._id != auth._id &&
+                                (iFollow
                                     ?
                                     <button className="content__button content__button--right post__button" onClick={() => unFollow(userProfile._id)}>Dejar de seguir</button>
                                     :
                                     <button className="content__button content__button--right" onClick={() => follow(userProfile._id)}>Seguir</button>
-                                :
-                                <></>
+                                )
                             }
                         </div>
                         <h2 className="container-names__nickname">{userProfile.nick}</h2>
@@ -161,56 +182,14 @@ export const Profile = () => {
                 </div>
             </header>
 
-            <div className="content__posts">
-                {publications.map(publication =>
-                    <article key={publication._id} className="posts__post">
-
-                        <div className="post__container">
-
-                            <div className="post__image-user">
-                                <a href="#" className="post__image-link">
-                                    {userProfile.image !== 'default.png' &&
-                                        <img src={Global.url + "user/avatar/" + userProfile.image} className="post__user-image" alt="Foto de perfil" />
-                                    }
-
-                                    {userProfile.image === 'default.png' &&
-                                        <img src={avatar} className="post__user-image" alt="Foto de perfil" />
-                                    }
-                                </a>
-                            </div>
-
-                            <div className="post__body">
-
-                                <div className="post__user-info">
-                                    <a href="#" className="user-info__name">Victor Robles</a>
-                                    <span className="user-info__divider"> | </span>
-                                    <a href="#" className="user-info__create-date">Hace 1 hora</a>
-                                </div>
-
-                                <h4 className="post__content">{publication.text}</h4>
-
-                            </div>
-                        </div>
-
-                        <div className="post__buttons">
-
-                            <a href="#" className="post__button">
-                                <i className="fa-solid fa-trash-can"></i>
-                            </a>
-
-                        </div>
-
-                    </article>
-                )}
-
-
-            </div>
-
-            <div className="content__container-btn">
-                <button className="content__btn-more-post">
-                    Ver mas publicaciones
-                </button>
-            </div>
+            <PublicationList
+                publications={publications}
+                getPublications={getPublications}
+                page={page}
+                setPage={setPage}
+                more={more}
+                setMore={setMore}
+            />
 
         </>
     )
