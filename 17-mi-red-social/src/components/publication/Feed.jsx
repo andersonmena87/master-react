@@ -14,10 +14,17 @@ export const Feed = () => {
     const { auth } = useAuth();
 
     useEffect(() => {
-        getPublications(1, true);
+        getPublications(1, false);
     }, [params]);
 
-    const getPublications = async (nextPage = 1) => {
+    const getPublications = async (nextPage = 1, showNews = false) => {
+
+        if(showNews) {
+            setPage(1);
+            setPublications([]);
+            setMore(true);
+        }
+
         const request = await fetch(Global.url + 'publication/list/' + nextPage, {
             method: 'GET',
             headers: {
@@ -32,14 +39,18 @@ export const Feed = () => {
             if (publications.length == 0) {
                 setPublications(data.publications);
             } else {
-                setPublications([
-                    ...publications,
-                    ...data.publications
-                ]);
+                if(!showNews){
+                    setPublications([
+                        ...publications,
+                        ...data.publications
+                    ]);
+                }else{
+                    setPublications(data.publications);
+                }
 
             }
 
-            if (publications.length >= data.total - data.publications.length) {
+            if (!showNews && publications.length >= data.total - data.publications.length) {
                 setMore(false);
             }
 
@@ -55,7 +66,7 @@ export const Feed = () => {
 
             <header className="content__header">
                 <h1 className="content__title">Timeline</h1>
-                <button className="content__button">Mostrar nuevas</button>
+                <button className="content__button" onClick={ () => getPublications(1, true)}>Mostrar nuevas</button>
             </header>
 
             <PublicationList

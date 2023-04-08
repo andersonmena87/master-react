@@ -4,6 +4,7 @@ import avatar from '../../assets/img/user.png';
 import { Global } from '../../helpers/Global';
 import useAuth from '../../hooks/useAuth';
 import { getDataLocal } from '../../helpers/LocalStorage';
+import ReactTimeAgo from 'react-time-ago';
 
 export const PublicationList = ({ publications, getPublications, page, setPage, more, setMore }) => {
     const { auth } = useAuth();
@@ -59,7 +60,9 @@ export const PublicationList = ({ publications, getPublications, page, setPage, 
                                 <div className="post__user-info">
                                     <a href="#" className="user-info__name">{publication.user.name} {publication.user.surname}</a>
                                     <span className="user-info__divider"> | </span>
-                                    <a href="#" className="user-info__create-date">{publication.user.create_at}</a>
+                                    <a href="#" className="user-info__create-date">
+                                        <ReactTimeAgo date={publication.create_at} locale="es-ES" />
+                                    </a>
                                 </div>
 
                                 <h4 className="post__content">{publication.text}</h4>

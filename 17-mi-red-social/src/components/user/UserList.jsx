@@ -4,6 +4,7 @@ import { Global } from '../../helpers/Global';
 import { getDataLocal } from '../../helpers/LocalStorage';
 import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import ReactTimeAgo from 'react-time-ago';
 
 export const UserList = ({ users, following, setFollowing, loading, more, page, setPage, getUsers }) => {
     const { auth } = useAuth();
@@ -97,7 +98,7 @@ export const UserList = ({ users, following, setFollowing, loading, more, page, 
                                     </Link>
                                     <span className="user-info__divider"> | </span>
                                     <Link to={'/social/perfil/' + user._id} className="user-info__create-date">
-                                        {user.create_at}
+                                        <ReactTimeAgo date={user.create_at} locale="es-ES" />
                                     </Link>
                                 </div>
 
